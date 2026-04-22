@@ -1,0 +1,94 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --brand: #0f172a;           /* navy primario */
+  --brand-dark: #020617;
+  --brand-light: #1e293b;
+  --accent: #ea580c;          /* naranja taller / automotriz */
+  --surface: #f8fafc;
+  --ink: #0f172a;
+  --ink-muted: #64748b;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: "DM Sans", system-ui, sans-serif;
+  color: var(--ink);
+  background: #ffffff;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+  letter-spacing: -0.02em;
+}
+
+/* Scroll-triggered reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s cubic-bezier(.4,0,.2,1), transform 0.7s cubic-bezier(.4,0,.2,1);
+  will-change: opacity, transform;
+}
+.reveal-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* Hover lift para cards */
+.card-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.card-lift:hover {
+  transform: translateY(-4px);
+}
+
+/* Pulse suave para acento */
+@keyframes pulse-ring {
+  0%   { box-shadow: 0 0 0 0 rgba(234, 88, 12, 0.45); }
+  70%  { box-shadow: 0 0 0 14px rgba(234, 88, 12, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(234, 88, 12, 0); }
+}
+.pulse-accent { animation: pulse-ring 2.2s infinite; }
+
+/* Micro-interacciones premium (Negocio tier) */
+.btn-magnetic {
+  position: relative;
+  transition: transform 0.25s cubic-bezier(.4,0,.2,1), box-shadow 0.3s ease, filter 0.25s ease;
+}
+.btn-magnetic:hover  { transform: translateY(-2px) scale(1.02); filter: brightness(1.08); }
+.btn-magnetic:active { transform: translateY(0) scale(0.98); }
+
+.link-underline { position: relative; }
+.link-underline::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -4px;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s cubic-bezier(.4,0,.2,1);
+}
+.link-underline:hover::after { transform: scaleX(1); transform-origin: left; }
+
+.text-gradient {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--brand) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Respeta usuarios con reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .reveal-in { opacity: 1; transform: none; transition: none; }
+  .pulse-accent, .animate-marquee { animation: none; }
+  html { scroll-behavior: auto; }
+}
